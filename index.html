@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#edf2f7">
+  <title>HSANNU ICC 百晓生 · 学生资料库</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script defer src="./vendor/peerjs.min.js"></script>
+  <script type="module" src="./app.mjs"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="topbar">
+    <div class="shell topbar-inner">
+      <a class="brand" href="#ask">
+        <span class="brand-mark" aria-hidden="true"><svg width="23" height="23" viewBox="0 0 24 24" fill="none"><path d="M4 5.5c3.2-.7 5.6-.2 8 1.7 2.4-1.9 4.8-2.4 8-1.7v12c-3.2-.7-5.6-.2-8 1.7-2.4-1.9-4.8-2.4-8-1.7v-12Z" stroke="currentColor" stroke-width="1.55" stroke-linejoin="round"/><path d="M12 7v12M7 9.5c.9 0 1.6.2 2.5.6M7 13c.9 0 1.6.2 2.5.6M14.5 10.1c.9-.4 1.6-.6 2.5-.6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></span>
+        <span><strong>HSANNU ICC 百晓生</strong><small>学生资料库</small></span>
+      </a>
+      <nav class="nav" aria-label="资料库">
+        <a href="#ask" aria-current="page">问答</a>
+        <a href="#courses">课程</a>
+        <a href="#library">资料</a>
+        <a href="#reviews">选课评价</a>
+        <a href="#share">分享与同步</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main" class="shell" tabindex="-1">
+    <noscript><p class="notice">开启 JavaScript 即可使用网页。也可以直接阅读<a href="./knowledge/公开知识正文.md">公开知识正文</a>。</p></noscript>
+    <section class="page" id="ask" aria-labelledby="ask-title">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="signal-dot"></span> 东北师大附中国际课程中心</p>
+          <h1 id="ask-title">ICC<span> 百晓生</span></h1>
+          <p>查课程，翻出处，收好同学的经验。</p>
+        </div>
+        <div class="field-card" aria-hidden="true">
+          <div class="field-card-top"><span>HSANNU / ICC</span><span>01</span></div>
+          <div class="field-card-mid">
+            <svg viewBox="0 0 110 72" width="110" height="72" fill="none"><path d="M3 60h104M12 60V39h14v21m14 0V32h30v28m15 0V39h14v21M36 32l19-15 19 15M53 17V9h13M48 60V47h14v13M19 46v6m73-6v6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 66h92M27 32h9m38 0h9M55 37v4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity=".55"/></svg>
+            <span class="field-stamp">学生版</span>
+          </div>
+          <div class="field-card-bottom">STUDENT REFERENCE</div>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <article class="panel ask-panel">
+          <p class="eyebrow"><span class="section-number">01</span> 学生问答</p>
+          <h2>想查什么？</h2>
+          <form id="question-form">
+            <label for="question">你的问题</label>
+            <textarea id="question" name="question" rows="3" maxlength="600" placeholder="输入你想查的问题" required></textarea>
+            <div class="form-grid scope-grid">
+              <label>届别 <small>选填</small><input id="question-cohort" name="cohort" maxlength="40" placeholder="如 2027 届"></label>
+              <label>适用学年 <small>选填</small><input id="question-year" name="year" maxlength="25" placeholder="如 2026–2027"></label>
+            </div>
+            <label>科目 <small>选填</small><input id="question-course" name="course" maxlength="70" placeholder="如 Computer Science"></label>
+            <div class="button-row ask-actions">
+              <button type="submit" class="button primary">查资料 <span aria-hidden="true">↗</span></button>
+              <button type="button" class="button quiet" id="ask-model">用我的 AI</button>
+            </div>
+          </form>
+          <div class="quick-topics" aria-label="常查问题">
+            <button type="button" data-question="在哪里查看 2026 年学校公开招生简章？">招生简章</button>
+            <button type="button" data-question="EE May 2027 有什么变化？">EE 2027</button>
+          </div>
+        </article>
+
+        <article class="panel answer-panel" aria-labelledby="answer-title">
+          <div class="panel-topline">
+            <p class="eyebrow"><span class="section-number">02</span> 资料卡</p>
+            <span class="tag" id="answer-scope">公开资料</span>
+          </div>
+          <h2 id="answer-title">查询结果</h2>
+          <p class="answer-text" id="answer-text">输入问题后，这里会显示相关资料和出处。</p>
+          <div id="answer-matches"></div>
+          <div class="citations" id="answer-citations" hidden>
+            <h3>出处</h3>
+            <ol id="answer-sources"></ol>
+          </div>
+          <p id="question-status" class="status" role="status"></p>
+          <div id="model-result" class="model-result" hidden>
+            <h3>我的 AI · 生成回答</h3>
+            <p id="model-answer" class="answer-text"></p>
+            <h4>提供给模型的资料</h4>
+            <ol id="model-sources" class="source-list"></ol>
+          </div>
+        </article>
+      </div>
+
+      <div class="guide-grid">
+        <a class="guide-card" href="#library"><span class="guide-id">01 / 资料</span><strong>看公开来源和同学补充</strong><span>按主题翻阅，按出处核对 <span aria-hidden="true">↗</span></span></a>
+        <a class="guide-card" href="#reviews"><span class="guide-id">02 / 选课</span><strong>看看上过这门课的人怎么说</strong><span>先选科目，再选老师 <span aria-hidden="true">↗</span></span></a>
+        <a class="guide-card" href="#share"><span class="guide-id">03 / 分享</span><strong>把选中的资料发给同学</strong><span>支持资料包和网页配对 <span aria-hidden="true">↗</span></span></a>
+      </div>
+
+      <details id="model-settings" class="panel settings">
+        <summary>连接我的 AI <span id="model-badge" class="tag">按需连接</span></summary>
+        <p class="subtle">把指令发给你常用的 Agent。它可以帮你填写设置，或给你一行连接码。</p>
+        <div class="button-row"><button class="button primary" id="model-agent-copy" type="button">复制给 Agent 的指令</button></div>
+        <details id="model-agent-instructions">
+          <summary>查看指令</summary>
+          <label for="model-agent-command">发给 Agent 的指令</label>
+          <textarea id="model-agent-command" rows="4" readonly></textarea>
+        </details>
+        <form id="model-agent-form">
+          <label for="model-agent-code">Agent 连接码</label>
+          <textarea id="model-agent-code" rows="2" maxlength="4096" placeholder="粘贴 Agent 返回的一行 JSON" aria-describedby="model-agent-help" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" required></textarea>
+          <p class="subtle" id="model-agent-help">连接码只包含接口和模型。服务需要令牌时，你可以在网页里填写。</p>
+          <div class="button-row"><button class="button quiet" type="submit">导入连接码</button></div>
+          <p class="status" id="model-agent-status" role="status"></p>
+        </form>
+        <details id="model-manual-settings">
+          <summary>手动设置</summary>
+          <p class="subtle">核对允许网页调用的 OpenAI 兼容接口。网页仅在你点测试或发问时发请求。接口与模型名称可保存，令牌只在此页面会话中使用。</p>
+          <form id="model-form">
+            <div class="form-grid">
+              <label>接口 URL<input id="model-endpoint" name="endpoint" type="url" maxlength="400" placeholder="https://你的服务/v1/chat/completions" autocomplete="off"></label>
+              <label>模型名称<input id="model-name" name="model" maxlength="140" placeholder="服务提供的模型 ID" autocomplete="off"></label>
+            </div>
+            <label>访问令牌 <small>按服务要求填写</small><input id="model-token" name="token" type="password" autocomplete="off" spellcheck="false" maxlength="2048"></label>
+            <label class="check"><input id="model-personal" type="checkbox">本次会话允许把匹配的个人资料和同学补充发给此模型</label>
+            <div class="button-row"><button class="button primary" type="submit">保存连接设置</button><button class="button quiet" id="test-model" type="button">测试连接</button></div>
+            <p class="status" id="model-status" role="status"></p>
+          </form>
+        </details>
+      </details>
+    </section>
+
+    <section class="page" id="courses" aria-labelledby="courses-title" hidden>
+      <header class="page-heading">
+        <div>
+          <p class="eyebrow">HSANNU ICC · 本学年</p>
+          <h1 id="courses-title">课程轮</h1>
+          <p>按课程体系查看各学科组和科目。</p>
+        </div>
+        <div class="course-switch" role="group" aria-label="课程体系">
+          <button class="button" type="button" data-course-program="ib" aria-pressed="true">IB DP</button>
+          <button class="button" type="button" data-course-program="igcse" aria-pressed="false">IGCSE</button>
+        </div>
+      </header>
+      <article class="panel course-panel" aria-labelledby="course-program-title">
+        <div class="panel-topline">
+          <h2 id="course-program-title">IB DP</h2>
+          <p class="tag" id="course-meta" role="status"></p>
+        </div>
+        <div class="course-layout">
+          <div class="course-wheel" id="course-wheel">
+            <svg viewBox="0 0 460 460" aria-hidden="true" focusable="false"></svg>
+          </div>
+          <ul class="course-groups" id="course-groups" role="list" aria-label="课程分组名单"></ul>
+        </div>
+        <footer class="course-source" id="course-source">
+          <p>课程名单由同学提供 · 2026 年 11 月整理</p>
+          <a id="course-ib-source" href="https://www.ibo.org/programmes/diploma-programme/curriculum/" target="_blank" rel="noopener noreferrer">IB 官方学科组 ↗</a>
+          <p id="course-igcse-source" hidden>IGCSE 按学科领域归类</p>
+        </footer>
+      </article>
+    </section>
+
+    <section class="page" id="library" aria-labelledby="library-title" hidden>
+      <header class="page-heading">
+        <div><p class="eyebrow"><span class="section-number">01</span> 来源与笔记</p><h1 id="library-title">资料</h1><p>公开资料带出处，同学补充带适用范围。</p></div>
+        <div class="button-row"><a class="button quiet" href="./knowledge/公开知识正文.md">公开知识正文 ↗</a><a class="button quiet" href="./knowledge/提问模板.md">通用 AI 提问模板 ↗</a></div>
+      </header>
+      <div class="page-columns">
+        <article class="panel">
+          <div class="panel-topline"><h2>公开资料</h2><span id="knowledge-date" class="tag">来源索引</span></div>
+          <label for="topic-filter">资料主题</label>
+          <select id="topic-filter"><option value="">全部主题</option></select>
+          <div id="knowledge-list" class="record-list"></div>
+          <details class="source-details"><summary>查看原始来源目录</summary><ol id="knowledge-sources" class="source-list"></ol></details>
+        </article>
+
+        <div class="page-stack">
+          <article class="panel">
+            <h2 id="intel-heading">添加学校资料</h2>
+            <p class="subtle">记一条选课通知、个人经历或待核实线索。保存后可在分享页勾选发布。</p>
+            <form id="intel-form">
+              <label>标题<input name="title" maxlength="120" required placeholder="如 2027 届 DP 选课通知"></label>
+              <label>要点<textarea name="summary" rows="3" maxlength="2000" required placeholder="写下通知内容和适用范围"></textarea></label>
+              <div class="form-grid">
+                <label>出处类型<select name="sourceType"><option value="school">学校通知或公开资料</option><option value="experience">亲历经验</option><option value="lead">待核实线索</option></select></label>
+                <label>资料日期 <small>选填</small><input name="date" type="date"></label>
+                <label>届别 <small>选填</small><input name="cohort" maxlength="40" placeholder="如 2027 届"></label>
+                <label>适用学年 <small>选填</small><input name="year" maxlength="25" placeholder="如 2026–2027"></label>
+              </div>
+              <label>科目 / 主题 <small>选填</small><input name="topic" maxlength="70" placeholder="如 HL 选课"></label>
+              <label>出处链接 <small>选填</small><input name="url" type="url" maxlength="500" placeholder="https://"></label>
+              <label>本地附件 <small>选填 · 仅存此浏览器</small><input name="attachment" type="file"></label>
+              <label id="remove-attachment-label" class="check" hidden><input name="removeAttachment" type="checkbox">移除现有附件</label>
+              <div class="button-row"><button class="button primary" type="submit">保存资料</button><button class="button quiet" id="cancel-intel-edit" type="button" hidden>取消编辑</button></div>
+              <p id="intel-status" class="status" role="status"></p>
+            </form>
+          </article>
+          <article class="panel">
+            <div class="panel-topline"><h2>补充资料</h2><span class="tag" id="intel-count">0 条</span></div>
+            <div id="intel-list" class="record-list"><p class="empty">保存或接收的资料会出现在这里。</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="reviews" aria-labelledby="reviews-title" hidden>
+      <header class="page-heading">
+        <div><p class="eyebrow"><span class="section-number">02</span> 学生选课参考</p><h1 id="reviews-title">选课评价</h1><p>先选科目，再选老师。任课信息由同学提供，具体分工以学校安排为准。</p></div>
+      </header>
+      <div class="page-columns">
+        <article class="panel">
+          <div class="panel-topline"><h2>评价汇总</h2><span class="tag" id="review-count">0 条</span></div>
+          <form id="review-filters" class="form-grid">
+            <label for="review-filter-course">科目<select id="review-filter-course" name="course" required><option value="">选择科目</option></select></label>
+            <label for="review-filter-teacher">老师<select id="review-filter-teacher" name="teacher" disabled><option value="">请先选科目</option></select></label>
+            <label>层级<select name="level"><option value="">全部</option><option>HL</option><option>SL</option></select></label>
+            <label>学年<input name="year" maxlength="25" placeholder="全部学年"></label>
+            <label>届别<input name="cohort" maxlength="40" placeholder="全部届别"></label>
+            <div class="filter-submit"><button class="button quiet" type="submit">筛选</button></div>
+          </form>
+          <p id="review-filter-status" class="status" role="status"></p>
+          <div id="review-groups" class="record-list"><p class="empty">选择科目后查看评价。</p></div>
+        </article>
+
+        <div class="page-stack">
+          <article class="panel">
+            <h2 id="review-heading">记录已修课程</h2>
+            <form id="review-form">
+              <div class="form-grid">
+                <label for="review-course">科目<select id="review-course" name="course" required><option value="">选择科目</option></select></label>
+                <label for="review-custom-course" hidden>填写科目<input id="review-custom-course" name="customCourse" maxlength="100" required disabled></label>
+                <label for="review-teacher">老师<select id="review-teacher" name="teacher" required disabled><option value="">请先选科目</option></select></label>
+                <label for="review-custom-teacher" hidden>填写老师<input id="review-custom-teacher" name="customTeacher" maxlength="100" required disabled></label>
+                <label>层级<select name="level" required><option value="">选择层级</option><option>HL</option><option>SL</option></select></label>
+                <label>学年<input name="year" maxlength="25" placeholder="如 2026–2027" required></label>
+              </div>
+              <label>届别 <small>选填</small><input name="cohort" maxlength="40" placeholder="如 2027 届"></label>
+              <fieldset class="score-fields">
+                <legend>课程体验 <small>选填 · 每项 1–5 分</small></legend>
+                <p class="subtle" id="score-hint">分数越高，表示讲解越清楚、反馈越有帮助，或节奏越适合你。</p>
+                <div class="form-grid score-grid">
+                  <label>讲解<select name="clarity" aria-describedby="score-hint"><option value="">跳过</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+                  <label>反馈<select name="feedback" aria-describedby="score-hint"><option value="">跳过</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+                  <label>节奏<select name="pace" aria-describedby="score-hint"><option value="">跳过</option><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+                </div>
+              </fieldset>
+              <label>工作量 <small>选填</small><select name="workload"><option value="">跳过</option><option value="light">较轻</option><option value="moderate">适中</option><option value="heavy">较重</option></select></label>
+              <label class="check"><input name="taken" type="checkbox" required>我上过这门课</label>
+              <div class="button-row"><button type="submit" class="button primary">保存评价</button><button type="button" class="button quiet" id="cancel-review-edit" hidden>取消编辑</button></div>
+              <p id="review-status" class="status" role="status"></p>
+            </form>
+          </article>
+          <article class="panel">
+            <h2>我的评价</h2>
+            <div id="review-list" class="record-list"><p class="empty">保存后可以在这里更正或撤回。</p></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="page" id="share" aria-labelledby="share-title" hidden>
+      <header class="page-heading">
+        <div><p class="eyebrow"><span class="section-number">03</span> 由你选、由你发</p><h1 id="share-title">分享与同步</h1><p>勾选要共享的资料和评价，再导出资料包或和同学的网页配对。</p></div>
+      </header>
+      <div class="page-columns">
+        <div class="page-stack">
+          <article class="panel">
+            <div class="panel-topline"><h2>选择共享内容</h2><span id="selection-count" class="tag">0 条已选</span></div>
+            <p class="subtle">取消勾选会停发后续版本。想通知已接收的同学收回一条记录，请到资料或评价页点「撤回」。附件留在此浏览器。</p>
+            <div id="share-list" class="record-list"><p class="empty">先保存一条资料或评价，再来选择。</p></div>
+            <p id="selection-status" class="status" role="status"></p>
+          </article>
+          <article class="panel">
+            <h2>交换资料包</h2>
+            <p class="subtle">下载已选记录的 JSON 文件，或预览同学发来的资料包。</p>
+            <div class="button-row"><button id="export-bundle" class="button primary" type="button" disabled>下载已选资料包</button></div>
+            <label>导入 JSON 资料包<input id="import-bundle" type="file" accept=".json,application/json"></label>
+            <div id="import-preview" class="import-preview" hidden>
+              <p id="import-summary"></p>
+              <ul id="import-items"></ul>
+              <div class="button-row"><button id="confirm-import" class="button primary" type="button">确认导入</button><button id="cancel-import" class="button quiet" type="button">取消</button></div>
+            </div>
+            <p id="bundle-status" class="status" role="status"></p>
+          </article>
+        </div>
+
+        <div class="page-stack">
+          <article class="panel">
+            <div class="panel-topline"><h2>网页配对</h2><span class="tag" id="sync-badge">未开启</span></div>
+            <p class="subtle">开启后使用 PeerJS 信令和 WebRTC 连接。双方确认配对并同时在线时，自动交换各自选中的记录。</p>
+            <details id="turn-settings" class="turn-settings">
+              <summary>配置 TURN 中继 <span class="tag">可选</span></summary>
+              <p class="subtle" id="turn-hint">有可用的中继服务时，填入服务地址和凭证，再开启同步。设置仅用于当前页面，暂停后可以更换。全部留空时尝试直连。</p>
+              <fieldset id="turn-fields" aria-label="TURN 中继设置" aria-describedby="turn-hint">
+                <label>TURN 地址<input id="turn-url" maxlength="512" placeholder="turns:relay.example.edu:443?transport=tcp" autocomplete="off" spellcheck="false"></label>
+                <div class="form-grid">
+                  <label>TURN 用户名<input id="turn-username" maxlength="512" autocomplete="off" spellcheck="false"></label>
+                  <label>TURN 凭证<input id="turn-credential" type="password" maxlength="2048" autocomplete="off" spellcheck="false"></label>
+                </div>
+              </fieldset>
+            </details>
+            <div class="button-row"><button class="button primary" id="sync-toggle" type="button">开启同步</button><button class="button quiet" id="sync-retry" type="button" hidden>重试连接</button></div>
+            <div id="sync-tools" hidden>
+              <label>本机配对码<input id="pair-code" type="text" readonly spellcheck="false"></label>
+              <div class="button-row"><button class="button quiet" id="copy-code" type="button">复制配对码</button></div>
+              <form id="pair-form">
+                <label>同学的配对码<input id="peer-code" name="peerCode" maxlength="60" autocomplete="off" spellcheck="false" required></label>
+                <button class="button primary" type="submit">发起配对</button>
+              </form>
+            </div>
+            <p class="status" id="sync-status" role="status"></p>
+            <p class="status" id="sync-receipt" role="status"></p>
+            <div id="peer-requests" class="record-list"></div>
+            <div id="peer-list" class="record-list"></div>
+          </article>
+          <article class="panel">
+            <h2>纳入问答与汇总的来源</h2>
+            <p class="subtle">可以为每位已接收的发布者单独选择是否采用。资料原记录可在资料页查看。</p>
+            <div id="publisher-list" class="record-list"><p class="empty">收到资料后会列出发布者。</p></div>
+            <p id="publisher-status" class="status" role="status"></p>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="shell footer">
+    <span>HSANNU ICC 百晓生 · 学生资料库</span>
+    <a href="./knowledge/来源索引.md">公开来源索引</a>
+  </footer>
+
+  <dialog id="confirm-dialog" aria-labelledby="confirm-title">
+    <form method="dialog">
+      <h2 id="confirm-title">确认操作</h2>
+      <p id="confirm-text"></p>
+      <div class="button-row"><button value="cancel" class="button quiet" autofocus>取消</button><button value="confirm" class="button danger" id="confirm-action">确认</button></div>
+    </form>
+  </dialog>
+</body>
+</html>

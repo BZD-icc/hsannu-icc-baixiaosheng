@@ -1,0 +1,48 @@
+{
+  "format": "hsannu-icc-bundle-v1",
+  "generatedAt": "2026-11-07T00:00:00.000Z",
+  "records": [
+    {
+      "publisherId": "demo-student-a",
+      "id": "fictional-physics-a",
+      "version": 1,
+      "kind": "review",
+      "state": "active",
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "data": {
+        "teacher": "示例老师（虚构）",
+        "course": "物理",
+        "level": "HL",
+        "year": "2026-2027",
+        "scores": {
+          "clarity": 5,
+          "feedback": 4,
+          "pace": 4
+        },
+        "workload": "moderate"
+      }
+    },
+    {
+      "publisherId": "demo-student-b",
+      "id": "fictional-physics-b",
+      "version": 1,
+      "kind": "review",
+      "state": "active",
+      "createdAt": "2026-11-07T00:00:00.000Z",
+      "updatedAt": "2026-11-07T00:00:00.000Z",
+      "data": {
+        "teacher": "示例老师（虚构）",
+        "course": "物理",
+        "level": "HL",
+        "year": "2026-2027",
+        "scores": {
+          "clarity": 4,
+          "feedback": 4,
+          "pace": 5
+        },
+        "workload": "heavy"
+      }
+    }
+  ]
+}
