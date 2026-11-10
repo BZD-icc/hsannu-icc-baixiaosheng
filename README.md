@@ -4,7 +4,7 @@
 
 ## 使用
 
-[打开百晓生网页](https://a15844188888-spec.github.io/hsannu-icc-baixiaosheng/) · [下载完整包或通用知识包](https://github.com/a15844188888-spec/hsannu-icc-baixiaosheng/releases/tag/v0.1.0)
+[打开百晓生网页](https://bzd-icc.github.io/hsannu-icc-baixiaosheng/) · [下载完整包或通用知识包](https://github.com/BZD-icc/hsannu-icc-baixiaosheng/releases/tag/v0.1.0)
 
 - **网页**可浏览课程和公开资料。要使用网页里的 AI 问答，可以请常用的 Agent 协助配置自己已有、允许网页调用的模型服务。
 - **其他 AI**可以读取[公开知识正文](web/knowledge/公开知识正文.md)和[通用提问模板](web/knowledge/提问模板.md)。
