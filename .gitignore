@@ -1,0 +1,16 @@
+node_modules/
+.runtime/
+.tmp/
+reports/
+coverage/
+dist/
+*.zip
+*.log
+.DS_Store
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+browser-profiles/
+private-data/

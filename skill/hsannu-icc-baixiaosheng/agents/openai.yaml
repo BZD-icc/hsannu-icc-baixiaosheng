@@ -1,0 +1,4 @@
+interface:
+  display_name: "HSANNU ICC 百晓生"
+  short_description: "查东北师大附中国际课程中心的公开资料、当届选课与学生评价"
+  default_prompt: "使用 $hsannu-icc-baixiaosheng 查我这届有哪些 HL 可选，并给出实际开课的核对路径。"
